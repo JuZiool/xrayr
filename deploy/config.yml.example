@@ -1,0 +1,53 @@
+# XrayR 配置模板
+# 首次运行 install.sh 会把它复制成 config/config.yml
+# 必改项已在下面标注「必改」
+
+ConfigVersion: 1
+
+Log:
+  Level: info          # none, error, warning, info, debug
+  Format: text
+  AccessPath: ""
+  ErrorPath: ""
+
+ConnectionConfig:
+  Handshake: 4
+  ConnIdle: 30
+  UplinkOnly: 2
+  DownlinkOnly: 4
+  BufferSize: 64
+
+Nodes:
+  - PanelType: Xboard      # 必改: 面板类型
+                           # Xboard / SSpanel / V2board / NewV2board /
+                           # PMpanel / Proxypanel / V2RaySocks / GoV2Panel / BunPanel
+    ApiConfig:
+      ApiHost: https://your-panel.example.com   # 必改: 面板地址
+      ApiKey: CHANGE_ME                          # 必改: 面板生成的节点密钥
+      NodeID: 1                                  # 必改: 面板里的节点 ID
+      NodeType: Vless                            # 必改: Vless / V2ray / Vmess / Trojan / Shadowsocks
+      Timeout: 30
+      SpeedLimit: 0        # Mbps，0 为不限制（本地设置会覆盖面板设置）
+      DeviceLimit: 0       # 0 为不限制
+    ControllerConfig:
+      ListenIP: 0.0.0.0
+      SendIP: 0.0.0.0
+      UpdatePeriodic: 60   # 拉取节点信息的间隔（秒）
+      EnableDNS: false
+      DNSType: AsIs
+      CertConfig:
+        # CertMode 选项: none / file / http / tls / dns
+        #   none  不使用 TLS
+        #   file  使用已有证书文件（需填 CertFile / KeyFile）
+        #   http  ACME HTTP 验证（需开放 80 端口）
+        #   tls   ACME TLS 验证（需开放 443 端口）
+        #   dns   ACME DNS 验证（无需开放端口，需填 Provider 和 DNSEnv）
+        CertMode: none
+        CertDomain: "node.example.com"
+        CertFile: /etc/XrayR/cert/node.example.com.cert
+        KeyFile: /etc/XrayR/cert/node.example.com.key
+        Provider: alidns
+        Email: test@example.com
+        DNSEnv:
+          ALICLOUD_ACCESS_KEY: aaa
+          ALICLOUD_SECRET_KEY: bbb

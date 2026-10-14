@@ -1,0 +1,10 @@
+* text=auto eol=lf
+
+# Shell 脚本必须是 LF，否则 Linux 上执行会报 command not found
+*.sh text eol=lf
+Dockerfile text eol=lf
+
+*.png binary
+*.dat binary
+*.zip binary
+*.tar binary
